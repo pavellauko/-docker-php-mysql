@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     libmcrypt-dev \
     libwebp-dev \
+    libicu-dev \
     sendmail
 
 # composer
@@ -23,7 +24,9 @@ RUN sed -i '/#!\/bin\/sh/aecho "$(hostname -i)\t$(hostname) $(hostname).localhos
 # php libs
 RUN docker-php-ext-install iconv bcmath zip && \
     pecl install mcrypt-1.0.4 && \
-    docker-php-ext-enable mcrypt
+    docker-php-ext-enable mcrypt && \
+    docker-php-ext-configure intl && \
+    docker-php-ext-install intl
 
 # cleaning
 RUN rm -rf /var/lib/apt/lists/*
