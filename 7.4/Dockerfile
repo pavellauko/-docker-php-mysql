@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libpng-dev \
+    libicu-dev \
     sendmail
 
 # composer
@@ -28,7 +29,9 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg && \
 # php database
 RUN docker-php-ext-install pdo_mysql && \
     docker-php-ext-install mysqli && \
-    docker-php-ext-enable mysqli
+    docker-php-ext-enable mysqli && \
+    docker-php-ext-configure intl && \
+    docker-php-ext-install intl
 
 # php libs
 RUN docker-php-ext-install zip
